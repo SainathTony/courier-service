@@ -3,6 +3,7 @@ package repository.impl;
 import model.Coupon;
 import org.junit.jupiter.api.Test;
 import repository.CouponRepository;
+import service.impl.OfferByWeightAndDistance;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,7 +13,8 @@ class StaticCouponRepositoryTest {
 
     @Test
     void shouldReturnCouponByCouponCode() {
-        Coupon expectedCoupon = Coupon.builder().couponCode("OFR001").discountPercentage(10).build();
+        Coupon expectedCoupon = Coupon.builder().couponCode("OFR001").discountPercentage(10)
+                .offerCriteria(new OfferByWeightAndDistance(0, 200, 70, 200)).build();
 
         Coupon coupon = couponRepository.getCouponByCouponCode("OFR001");
 

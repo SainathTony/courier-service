@@ -1,10 +1,12 @@
 package service.impl;
 
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import model.CourierPackage;
 import model.OfferCriteria;
 
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class OfferByWeightAndDistance implements OfferCriteria {
 
     private final int minimumDistance;
