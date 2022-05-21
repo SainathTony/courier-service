@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 
 class CostEstimationServiceImplTest {
 
-    private final InputService inputService = mock(InputFromCommandLine.class);
+    private final InputService inputService = mock(CourierInputCMD.class);
     private final CouponService couponService = mock(CouponServiceImpl.class);
     private final CostEstimationService costEstimationService = new CostEstimationServiceImpl(couponService);
 

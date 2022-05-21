@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class PackageManagerImplTest {
-    private final InputService inputService = mock(InputFromCommandLine.class);
+    private final InputService inputService = mock(CourierInputCMD.class);
     private final OutputService outputService = mock(ConsoleOutput.class);
     private final CostEstimationService costEstimationService = mock(CostEstimationServiceImpl.class);
     private final PackageManager packageManager = new PackageManagerImpl(inputService, outputService, costEstimationService);

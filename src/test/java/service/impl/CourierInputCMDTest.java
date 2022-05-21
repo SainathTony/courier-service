@@ -22,10 +22,10 @@ import static util.InputErrorMessages.INVALID_INPUT_LENGTH_MESSAGE;
 import static util.InputErrorMessages.INVALID_PACKAGE_ID_MESSAGE;
 import static util.InputErrorMessages.INVALID_WEIGHT_OR_DISTANCE_MESSAGE;
 
-class InputFromCommandLineTest {
+class CourierInputCMDTest {
 
     private final Scanner scanner = mock(Scanner.class);
-    private final InputService inputService = new InputFromCommandLine(scanner);
+    private final InputService inputService = new CourierInputCMD(scanner);
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @BeforeEach

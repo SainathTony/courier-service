@@ -17,7 +17,7 @@ import static util.InputErrorMessages.INVALID_WEIGHT_OR_DISTANCE_MESSAGE;
 import static util.InputErrorMessages.UNKNOWN_ERROR_MESSAGE;
 
 @RequiredArgsConstructor
-public class InputFromCommandLine implements InputService {
+public class CourierInputCMD implements InputService {
 
     private final Scanner scanner;
 
