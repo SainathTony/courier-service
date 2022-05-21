@@ -2,7 +2,7 @@ package service.impl;
 
 import lombok.RequiredArgsConstructor;
 import model.CostEstimate;
-import model.CourierPackage;
+import model.CourierInput;
 import service.CostEstimationService;
 import service.InputService;
 import service.OutputService;
@@ -19,10 +19,9 @@ public class PackageManagerImpl implements PackageManager {
 
     @Override
     public void manage() {
-        inputService.readInputFromUser();
-        List<CourierPackage> packages = inputService.getPackages();
-        List<CostEstimate> estimates = packages.stream().map(courierPackage ->
-                costEstimationService.estimate(courierPackage)).collect(Collectors.toList());
+        CourierInput courierInput = inputService.readInputFromUser();
+        List<CostEstimate> estimates = courierInput.getCourierPackageList().stream().map(courierPackage ->
+                costEstimationService.estimate(courierPackage, courierInput.getBaseDeliveryCost())).collect(Collectors.toList());
         outputService.showResults(estimates);
     }
 }

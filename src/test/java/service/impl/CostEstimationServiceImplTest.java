@@ -1,6 +1,7 @@
 package service.impl;
 
 import model.CostEstimate;
+import model.CourierInput;
 import model.Coupon;
 import model.CourierPackage;
 import model.OfferCriteria;
@@ -9,6 +10,7 @@ import service.CostEstimationService;
 import service.CouponService;
 import service.InputService;
 
+import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -17,7 +19,7 @@ class CostEstimationServiceImplTest {
 
     private final InputService inputService = mock(InputFromCommandLine.class);
     private final CouponService couponService = mock(CouponServiceImpl.class);
-    private final CostEstimationService costEstimationService = new CostEstimationServiceImpl(inputService, couponService);
+    private final CostEstimationService costEstimationService = new CostEstimationServiceImpl(couponService);
 
     @Test
     void shouldEstimateCostWithOfferForGivenPackage() {
@@ -25,10 +27,11 @@ class CostEstimationServiceImplTest {
         OfferCriteria offerCriteria = new OfferByWeightAndDistance(50, 250, 10, 150);
         Coupon coupon = Coupon.builder().couponCode("OFR003").discountPercentage(5).offerCriteria(offerCriteria).build();
         CourierPackage courierPackage = CourierPackage.builder().packageId("PKG1").packageWeight(10).deliveryDistance(100).couponCode("OFR003").build();
+        CourierInput estimateInput = CourierInput.builder().baseDeliveryCost(100).courierPackageList(asList(courierPackage)).build();
         when(couponService.getCouponByCouponCode("OFR003")).thenReturn(coupon);
-        when(inputService.getBaseDeliveryCost()).thenReturn(100.0);
+        when(inputService.readInputFromUser()).thenReturn(estimateInput);
 
-        CostEstimate estimate = costEstimationService.estimate(courierPackage);
+        CostEstimate estimate = costEstimationService.estimate(courierPackage, 100);
 
         assertEquals(costEstimate, estimate);
     }
@@ -39,10 +42,11 @@ class CostEstimationServiceImplTest {
         OfferCriteria offerCriteria = new OfferByWeightAndDistance(0, 200, 70, 200);
         Coupon coupon = Coupon.builder().couponCode("OFR001").discountPercentage(10).offerCriteria(offerCriteria).build();
         CourierPackage courierPackage = CourierPackage.builder().packageId("PKG1").packageWeight(5).deliveryDistance(5).couponCode("OFR001").build();
+        CourierInput estimateInput = CourierInput.builder().baseDeliveryCost(100).courierPackageList(asList(courierPackage)).build();
         when(couponService.getCouponByCouponCode("OFR001")).thenReturn(coupon);
-        when(inputService.getBaseDeliveryCost()).thenReturn(100.0);
+        when(inputService.readInputFromUser()).thenReturn(estimateInput);
 
-        CostEstimate estimate = costEstimationService.estimate(courierPackage);
+        CostEstimate estimate = costEstimationService.estimate(courierPackage, 100);
 
         assertEquals(costEstimate, estimate);
     }

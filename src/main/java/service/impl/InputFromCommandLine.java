@@ -2,6 +2,7 @@ package service.impl;
 
 import exception.CourierServiceException;
 import lombok.RequiredArgsConstructor;
+import model.CourierInput;
 import model.CourierPackage;
 import service.InputService;
 
@@ -19,22 +20,22 @@ import static util.InputErrorMessages.UNKNOWN_ERROR_MESSAGE;
 public class InputFromCommandLine implements InputService {
 
     private final Scanner scanner;
-    private double BASE_DELIVERY_COST;
-    private List<CourierPackage> packages = new ArrayList<>();
 
     @Override
-    public void readInputFromUser() {
+    public CourierInput readInputFromUser() {
+        List<CourierPackage> packages = new ArrayList<>();
         System.out.print("Enter base delivery cost and number of packages (space seperated):");
         String[] baseDeliveryAndPackages = scanner.nextLine().split(" ");
-        BASE_DELIVERY_COST = Integer.parseInt(baseDeliveryAndPackages[0]);
+        double baseDeliveryCost = Double.parseDouble(baseDeliveryAndPackages[0]);
         int numberOfPackages = Integer.parseInt(baseDeliveryAndPackages[1]);
         System.out.println("Enter Package_ID Package_Weight_In_KG Package_Delivery_Distance_In_KM Coupon_Code (Space seperated)");
-        while (numberOfPackages > 0) {
+        int counter = 0;
+        while (counter < numberOfPackages) {
             try {
-                System.out.print("Enter "+ getPackageSNo() +" package information: ");
+                System.out.print("Enter " + getPackageSNo(counter) + " package information: ");
                 CourierPackage courierPackage = takePackageInput();
                 packages.add(courierPackage);
-                numberOfPackages -= 1;
+                counter++;
             } catch (NumberFormatException ex) {
                 System.out.println(INVALID_WEIGHT_OR_DISTANCE_MESSAGE);
             } catch (CourierServiceException ex) {
@@ -43,14 +44,14 @@ public class InputFromCommandLine implements InputService {
                 System.out.println(UNKNOWN_ERROR_MESSAGE);
             }
         }
+        return CourierInput.builder().baseDeliveryCost(baseDeliveryCost).courierPackageList(packages).build();
     }
 
-    private String getPackageSNo() {
-        int insertedPackages = packages.size();
-        if (insertedPackages == 0) return "1st";
-        if(insertedPackages == 1) return "2nd";
-        if(insertedPackages == 2) return "3rd";
-        return (insertedPackages + 1) + "th";
+    private String getPackageSNo(int counter) {
+        if (counter == 0) return "1st";
+        if (counter == 1) return "2nd";
+        if (counter == 2) return "3rd";
+        return (counter + 1) + "th";
     }
 
     private CourierPackage takePackageInput() throws CourierServiceException {
@@ -58,7 +59,8 @@ public class InputFromCommandLine implements InputService {
         if (packageInfo.length < 4)
             throw new CourierServiceException(INVALID_INPUT_LENGTH_MESSAGE);
         String packageId = packageInfo[0];
-        if (packageId == "" || packageId == null || packageId.length() < 2) throw new CourierServiceException(INVALID_PACKAGE_ID_MESSAGE);
+        if (packageId == "" || packageId == null || packageId.length() < 2)
+            throw new CourierServiceException(INVALID_PACKAGE_ID_MESSAGE);
         double packageWeight = Double.parseDouble(packageInfo[1]);
         double packageDeliveryDistance = Double.parseDouble(packageInfo[2]);
         String couponCode = packageInfo[3];
@@ -69,15 +71,5 @@ public class InputFromCommandLine implements InputService {
                 .packageWeight(packageWeight)
                 .deliveryDistance(packageDeliveryDistance)
                 .couponCode(couponCode).build();
-    }
-
-    @Override
-    public double getBaseDeliveryCost() {
-        return BASE_DELIVERY_COST;
-    }
-
-    @Override
-    public List<CourierPackage> getPackages() {
-        return packages;
     }
 }

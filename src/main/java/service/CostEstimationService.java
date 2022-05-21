@@ -4,5 +4,5 @@ import model.CostEstimate;
 import model.CourierPackage;
 
 public interface CostEstimationService {
-    CostEstimate estimate(CourierPackage courierPackage);
+    CostEstimate estimate(CourierPackage courierPackage, double baseDeliveryCost);
 }

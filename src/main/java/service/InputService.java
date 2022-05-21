@@ -1,13 +1,7 @@
 package service;
 
-import model.CourierPackage;
+import model.CourierInput;
 
-import java.util.List;
-
-public interface InputService {
-    void readInputFromUser();
-
-    double getBaseDeliveryCost();
-
-    List<CourierPackage> getPackages();
+public interface InputService<T> {
+    CourierInput readInputFromUser();
 }

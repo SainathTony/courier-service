@@ -1,6 +1,7 @@
 package service.impl;
 
 import model.CostEstimate;
+import model.CourierInput;
 import model.CourierPackage;
 import org.junit.jupiter.api.Test;
 import service.CostEstimationService;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -34,20 +36,18 @@ class PackageManagerImplTest {
         packageList.add(CourierPackage.builder().packageId("PKG1").packageWeight(5).deliveryDistance(5).couponCode("OFR001").build());
         packageList.add(CourierPackage.builder().packageId("PKG2").packageWeight(15).deliveryDistance(5).couponCode("OFR002").build());
         packageList.add(CourierPackage.builder().packageId("PKG3").packageWeight(10).deliveryDistance(100).couponCode("OFR003").build());
-        doNothing().when(inputService).readInputFromUser();
-        when(inputService.getPackages()).thenReturn(packageList);
+        when(inputService.readInputFromUser()).thenReturn(CourierInput.builder().baseDeliveryCost(100).courierPackageList(packageList).build());
         doNothing().when(outputService).showResults(costEstimateList);
-        when(costEstimationService.estimate(any(CourierPackage.class))).thenReturn(costEstimateList.get(0))
+        when(costEstimationService.estimate(any(CourierPackage.class), anyDouble())).thenReturn(costEstimateList.get(0))
                 .thenReturn(costEstimateList.get(1)).thenReturn(costEstimateList.get(2));
 
         packageManager.manage();
 
         verify(inputService, times(1)).readInputFromUser();
-        verify(inputService, times(1)).getPackages();
-        verify(costEstimationService, times(3)).estimate(any(CourierPackage.class));
-        verify(costEstimationService, times(1)).estimate(packageList.get(0));
-        verify(costEstimationService, times(1)).estimate(packageList.get(1));
-        verify(costEstimationService, times(1)).estimate(packageList.get(2));
+        verify(costEstimationService, times(3)).estimate(any(CourierPackage.class), anyDouble());
+        verify(costEstimationService, times(1)).estimate(packageList.get(0), 100);
+        verify(costEstimationService, times(1)).estimate(packageList.get(1), 100);
+        verify(costEstimationService, times(1)).estimate(packageList.get(2), 100);
         verify(outputService, times(1)).showResults(costEstimateList);
     }
 }

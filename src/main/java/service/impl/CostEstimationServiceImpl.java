@@ -11,12 +11,11 @@ import service.InputService;
 @RequiredArgsConstructor
 public class CostEstimationServiceImpl implements CostEstimationService {
 
-    private final InputService inputService;
     private final CouponService couponService;
 
     @Override
-    public CostEstimate estimate(CourierPackage courierPackage) {
-        double totalCost = getTotalCost(courierPackage);
+    public CostEstimate estimate(CourierPackage courierPackage, double baseDeliveryCost) {
+        double totalCost = getTotalCost(courierPackage, baseDeliveryCost);
         Coupon coupon = couponService.getCouponByCouponCode(courierPackage.getCouponCode());
         boolean couponApplicable = coupon.getOfferCriteria().isCouponApplicableFor(courierPackage);
         double discount = couponApplicable ? applyCoupon(coupon, totalCost) : 0;
@@ -27,8 +26,8 @@ public class CostEstimationServiceImpl implements CostEstimationService {
         return CostEstimate.builder().packageId(courierPackage.getPackageId()).discount(discount).totalCost(totalCost - discount).build();
     }
 
-    private double getTotalCost(CourierPackage courierPackage) {
-        double totalCost = inputService.getBaseDeliveryCost() + (courierPackage.getPackageWeight() * 10) + (courierPackage.getDeliveryDistance() * 5);
+    private double getTotalCost(CourierPackage courierPackage, double baseDeliveryCost) {
+        double totalCost = baseDeliveryCost + (courierPackage.getPackageWeight() * 10) + (courierPackage.getDeliveryDistance() * 5);
         return totalCost;
     }
 
