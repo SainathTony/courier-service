@@ -19,7 +19,6 @@ public class StaticCouponRepository implements CouponRepository {
 
     @Override
     public Coupon getCouponByCouponCode(String couponCode) {
-        Coupon coupon = coupons.get(couponCode);
-        return coupon != null ? coupon : coupons.get("NA");
+        return coupons.get(couponCode);
     }
 }
