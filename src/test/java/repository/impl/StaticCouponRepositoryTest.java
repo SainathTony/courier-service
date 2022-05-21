@@ -23,7 +23,8 @@ class StaticCouponRepositoryTest {
 
     @Test
     void shouldReturnDefaultCoupon() {
-        Coupon expectedCoupon = Coupon.builder().couponCode("NA").discountPercentage(0).build();
+        Coupon expectedCoupon = Coupon.builder().couponCode("NA").discountPercentage(0)
+                .offerCriteria(new OfferByWeightAndDistance(0,0,0,0)).build();
 
         Coupon coupon = couponRepository.getCouponByCouponCode("NA");
 

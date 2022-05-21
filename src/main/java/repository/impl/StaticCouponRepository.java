@@ -18,7 +18,8 @@ public class StaticCouponRepository implements CouponRepository {
                 .offerCriteria(new OfferByWeightAndDistance(50, 150, 100, 250)).build());
         coupons.put("OFR003", Coupon.builder().couponCode("OFR003").discountPercentage(5)
                 .offerCriteria(new OfferByWeightAndDistance(50, 250, 10, 150)).build());
-        coupons.put("NA", Coupon.builder().couponCode("NA").discountPercentage(0).build());
+        coupons.put("NA", Coupon.builder().couponCode("NA").discountPercentage(0)
+                .offerCriteria(new OfferByWeightAndDistance(0, 0, 0, 0)).build());
     }
 
     @Override
