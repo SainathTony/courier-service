@@ -18,7 +18,8 @@ public class CostEstimationServiceImpl implements CostEstimationService {
     public CostEstimate estimate(CourierPackage courierPackage) {
         double totalCost = getTotalCost(courierPackage);
         Coupon coupon = couponService.getCouponByCouponCode(courierPackage.getCouponCode());
-        double discount = applyCoupon(coupon, totalCost);
+        boolean couponApplicable = coupon.getOfferCriteria().isCouponApplicableFor(courierPackage);
+        double discount = couponApplicable ? applyCoupon(coupon, totalCost) : 0;
         return getEstimateWith(courierPackage, totalCost, discount);
     }
 
