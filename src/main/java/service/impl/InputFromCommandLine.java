@@ -16,7 +16,7 @@ public class InputFromCommandLine implements InputService {
     private List<CourierPackage> packages = new ArrayList<>();
 
     @Override
-    public void readInoutFromUser() {
+    public void readInputFromUser() {
         String[] baseDeliveryAndPackages = scanner.nextLine().split(" ");
         BASE_DELIVERY_COST = Integer.parseInt(baseDeliveryAndPackages[0]);
         int numberOfPackages = Integer.parseInt(baseDeliveryAndPackages[1]);

@@ -5,7 +5,7 @@ import model.CourierPackage;
 import java.util.List;
 
 public interface InputService {
-    void readInoutFromUser();
+    void readInputFromUser();
 
     double getBaseDeliveryCost();
 

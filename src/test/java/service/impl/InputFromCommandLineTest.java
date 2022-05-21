@@ -40,7 +40,7 @@ class InputFromCommandLineTest {
         packageList.add(CourierPackage.builder().packageId("PKG3").packageWeight(10).deliveryDistance(100).couponCode("OFR003").build());
         when(scanner.nextLine()).thenReturn("100 3").thenReturn("PKG1 5 5 OFR001").thenReturn("PKG2 15 5 OFR002").thenReturn("PKG3 10 100 OFR003");
 
-        inputService.readInoutFromUser();
+        inputService.readInputFromUser();
 
         assertEquals(3, inputService.getPackages().size());
         assertEquals(100, inputService.getBaseDeliveryCost());
@@ -54,7 +54,7 @@ class InputFromCommandLineTest {
         when(scanner.nextLine()).thenReturn("100 1").thenReturn("PKG1 5 OFR001").thenReturn("PKG1 5 5 OFR001");
         String errorMessage = "Please provide valid input. Format: PackageId Package_Weight_In_KG Delivery_Distance_IN_KM Offer_Code\n";
 
-        inputService.readInoutFromUser();
+        inputService.readInputFromUser();
 
         assertEquals(errorMessage, outContent.toString());
         assertEquals(1, inputService.getPackages().size());
@@ -71,7 +71,7 @@ class InputFromCommandLineTest {
         when(scanner.nextLine()).thenReturn("100 3").thenReturn("PKG1 5 OFR001").thenReturn("PKG1 5 5 OFR001").thenReturn("PKG2 15 5 OFR002").thenReturn("PKG3 10 100 OFR003");
         String errorMessage = "Please provide valid input. Format: PackageId Package_Weight_In_KG Delivery_Distance_IN_KM Offer_Code\n";
 
-        inputService.readInoutFromUser();
+        inputService.readInputFromUser();
 
         assertEquals(errorMessage, outContent.toString());
         assertEquals(3, inputService.getPackages().size());
