@@ -1,8 +1,9 @@
-package service;
+package service.impl;
 
 import lombok.RequiredArgsConstructor;
 import model.Coupon;
 import repository.CouponRepository;
+import service.CouponService;
 
 @RequiredArgsConstructor
 public class CouponServiceImpl implements CouponService {
