@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 @EqualsAndHashCode
-public class CourierInput {
+public class CourierInput implements Input{
     private final double baseDeliveryCost;
     private final List<CourierPackage> courierPackageList;
 }

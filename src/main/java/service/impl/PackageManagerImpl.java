@@ -19,7 +19,7 @@ public class PackageManagerImpl implements PackageManager {
 
     @Override
     public void manage() {
-        CourierInput courierInput = inputService.readInputFromUser();
+        CourierInput courierInput = (CourierInput) inputService.readInputFromUser();
         List<CostEstimate> estimates = courierInput.getCourierPackageList().stream().map(courierPackage ->
                 costEstimationService.estimate(courierPackage, courierInput.getBaseDeliveryCost())).collect(Collectors.toList());
         outputService.showResults(estimates);
