@@ -61,4 +61,21 @@ class InputServiceImplTest {
         assertEquals(100, inputService.getBaseDeliveryCost());
         assertEquals(packageList, inputService.getPackages());
     }
+
+    @Test
+    void shouldTakeInputAgainWhenUserProvidesInvalidData() {
+        List<CourierPackage> packageList = new ArrayList<>();
+        packageList.add(CourierPackage.builder().packageId("PKG1").packageWeight(5).deliveryDistance(5).couponCode("OFR001").build());
+        packageList.add(CourierPackage.builder().packageId("PKG2").packageWeight(15).deliveryDistance(5).couponCode("OFR002").build());
+        packageList.add(CourierPackage.builder().packageId("PKG3").packageWeight(10).deliveryDistance(100).couponCode("OFR003").build());
+        when(scanner.nextLine()).thenReturn("100 3").thenReturn("PKG1 5 OFR001").thenReturn("PKG1 5 5 OFR001").thenReturn("PKG2 15 5 OFR002").thenReturn("PKG3 10 100 OFR003");
+        String errorMessage = "Please provide valid input. Format: PackageId Package_Weight_In_KG Delivery_Distance_IN_KM Offer_Code\n";
+
+        inputService.readInoutFromUser();
+
+        assertEquals(errorMessage, outContent.toString());
+        assertEquals(3, inputService.getPackages().size());
+        assertEquals(100, inputService.getBaseDeliveryCost());
+        assertEquals(packageList, inputService.getPackages());
+    }
 }
