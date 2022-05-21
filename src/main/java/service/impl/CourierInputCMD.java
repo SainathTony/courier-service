@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static util.InputErrorMessages.INVALID_COUPON_CODE_MESSAGE;
-import static util.InputErrorMessages.INVALID_INPUT_LENGTH_MESSAGE;
+import static util.InputErrorMessages.INVALID_COURIER_INPUT_LENGTH_MESSAGE;
 import static util.InputErrorMessages.INVALID_PACKAGE_ID_MESSAGE;
 import static util.InputErrorMessages.INVALID_WEIGHT_OR_DISTANCE_MESSAGE;
 import static util.InputErrorMessages.UNKNOWN_ERROR_MESSAGE;
@@ -57,7 +57,7 @@ public class CourierInputCMD implements InputService {
     private CourierPackage takePackageInput() throws CourierServiceException {
         String[] packageInfo = scanner.nextLine().split(" ");
         if (packageInfo.length < 4)
-            throw new CourierServiceException(INVALID_INPUT_LENGTH_MESSAGE);
+            throw new CourierServiceException(INVALID_COURIER_INPUT_LENGTH_MESSAGE);
         String packageId = packageInfo[0];
         if (packageId == "" || packageId == null || packageId.length() < 2)
             throw new CourierServiceException(INVALID_PACKAGE_ID_MESSAGE);

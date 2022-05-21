@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static util.InputErrorMessages.INVALID_COUPON_CODE_MESSAGE;
-import static util.InputErrorMessages.INVALID_INPUT_LENGTH_MESSAGE;
+import static util.InputErrorMessages.INVALID_COURIER_INPUT_LENGTH_MESSAGE;
 import static util.InputErrorMessages.INVALID_PACKAGE_ID_MESSAGE;
 import static util.InputErrorMessages.INVALID_WEIGHT_OR_DISTANCE_MESSAGE;
 
@@ -61,7 +61,7 @@ class CourierInputCMDTest {
 
         CourierInput courierInput = (CourierInput) inputService.readInputFromUser();
 
-        assertTrue(outContent.toString().contains(INVALID_INPUT_LENGTH_MESSAGE));
+        assertTrue(outContent.toString().contains(INVALID_COURIER_INPUT_LENGTH_MESSAGE));
         assertEquals(estimateInput, courierInput);
     }
 
@@ -76,7 +76,7 @@ class CourierInputCMDTest {
 
         CourierInput courierInput = (CourierInput) inputService.readInputFromUser();
 
-        assertTrue(outContent.toString().contains(INVALID_INPUT_LENGTH_MESSAGE));
+        assertTrue(outContent.toString().contains(INVALID_COURIER_INPUT_LENGTH_MESSAGE));
         assertEquals(estimateInput, courierInput);
     }
 

@@ -11,8 +11,11 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static util.InputErrorMessages.INVALID_VEHICLE_INPUT;
+import static util.InputErrorMessages.INVALID_VEHICLE_INPUT_LENGTH_MESSAGE;
 
 class VehicleInputCMDTest {
 
@@ -38,5 +41,27 @@ class VehicleInputCMDTest {
         VehicleInput actualVehicleInput = (VehicleInput) inputService.readInputFromUser();
 
         assertEquals(expectedVehicleInput, actualVehicleInput);
+    }
+
+    @Test
+    void shouldShowAllFieldsRequiredMessage() {
+        VehicleInput expectedVehicleInput = VehicleInput.builder().noOfVehicles(2).maxCarryWeight(100).maxSpeed(70).build();
+        when(scanner.nextLine()).thenReturn("70 100").thenReturn("2 70 100");
+
+        VehicleInput actualVehicleInput = (VehicleInput) inputService.readInputFromUser();
+
+        assertEquals(expectedVehicleInput, actualVehicleInput);
+        assertTrue(outContent.toString().contains(INVALID_VEHICLE_INPUT_LENGTH_MESSAGE));
+    }
+
+    @Test
+    void shouldShowInvalidInputMessage() {
+        VehicleInput expectedVehicleInput = VehicleInput.builder().noOfVehicles(2).maxCarryWeight(100).maxSpeed(70).build();
+        when(scanner.nextLine()).thenReturn("A 70 100").thenReturn("2 70 100");
+
+        VehicleInput actualVehicleInput = (VehicleInput) inputService.readInputFromUser();
+
+        assertEquals(expectedVehicleInput, actualVehicleInput);
+        assertTrue(outContent.toString().contains(INVALID_VEHICLE_INPUT));
     }
 }
