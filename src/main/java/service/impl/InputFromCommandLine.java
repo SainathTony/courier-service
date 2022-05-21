@@ -31,7 +31,7 @@ public class InputFromCommandLine implements InputService {
         System.out.println("Enter Package_ID Package_Weight_In_KG Package_Delivery_Distance_In_KM Coupon_Code (Space seperated)");
         while (numberOfPackages > 0) {
             try {
-                System.out.print("Enter package information: ");
+                System.out.print("Enter "+ getPackageSNo() +" package information: ");
                 CourierPackage courierPackage = takePackageInput();
                 packages.add(courierPackage);
                 numberOfPackages -= 1;
@@ -43,6 +43,14 @@ public class InputFromCommandLine implements InputService {
                 System.out.println(UNKNOWN_ERROR_MESSAGE);
             }
         }
+    }
+
+    private String getPackageSNo() {
+        int insertedPackages = packages.size();
+        if (insertedPackages == 0) return "1st";
+        if(insertedPackages == 1) return "2nd";
+        if(insertedPackages == 2) return "3rd";
+        return (insertedPackages + 1) + "th";
     }
 
     private CourierPackage takePackageInput() throws CourierServiceException {
