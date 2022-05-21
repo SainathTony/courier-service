@@ -18,4 +18,13 @@ class StaticCouponRepositoryTest {
 
         assertEquals(expectedCoupon, coupon);
     }
+
+    @Test
+    void shouldReturnDefaultCouponForInvalidCouponCode() {
+        Coupon expectedCoupon = Coupon.builder().couponCode("NA").discountPercentage(0).build();
+
+        Coupon coupon = couponRepository.getCouponByCouponCode("XYZ");
+
+        assertEquals(expectedCoupon, coupon);
+    }
 }
