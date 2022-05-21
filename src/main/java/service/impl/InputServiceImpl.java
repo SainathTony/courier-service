@@ -20,13 +20,22 @@ public class InputServiceImpl implements InputService {
         String[] baseDeliveryAndPackages = scanner.nextLine().split(" ");
         BASE_DELIVERY_COST = Integer.parseInt(baseDeliveryAndPackages[0]);
         int numberOfPackages = Integer.parseInt(baseDeliveryAndPackages[1]);
-        for (int i = 0; i < numberOfPackages; i++) {
-            String[] packageInfo = scanner.nextLine().split(" ");
-            packages.add(CourierPackage.builder().packageId(packageInfo[0])
-                    .packageWeight(Integer.parseInt(packageInfo[1]))
-                    .deliveryDistance(Integer.parseInt(packageInfo[2]))
-                    .couponCode(packageInfo[3])
-                    .build());
+        while (numberOfPackages > 0) {
+            try{
+                String[] packageInfo = scanner.nextLine().split(" ");
+                String packageId = packageInfo[0];
+                Double packageWeight = Double.parseDouble(packageInfo[1]);
+                Double deliveryDistance = Double.parseDouble(packageInfo[2]);
+                String couponCode = packageInfo[3];
+                packages.add(CourierPackage.builder().packageId(packageId)
+                        .packageWeight(packageWeight)
+                        .deliveryDistance(deliveryDistance)
+                        .couponCode(couponCode)
+                        .build());
+                numberOfPackages -= 1;
+            } catch (NumberFormatException ex){
+                System.out.println("Please provide valid input. Format: PackageId Package_Weight_In_KG Delivery_Distance_IN_KM Offer_Code");
+            }
         }
     }
 
