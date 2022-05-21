@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 @RequiredArgsConstructor
-public class InputServiceImpl implements InputService {
+public class InputFromCommandLine implements InputService {
 
     private final Scanner scanner;
     private double BASE_DELIVERY_COST;

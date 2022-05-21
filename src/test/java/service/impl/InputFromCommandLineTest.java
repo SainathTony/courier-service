@@ -16,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class InputServiceImplTest {
+class InputFromCommandLineTest {
 
     private final Scanner scanner = mock(Scanner.class);
-    private final InputService inputService = new InputServiceImpl(scanner);
+    private final InputService inputService = new InputFromCommandLine(scanner);
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @BeforeEach
