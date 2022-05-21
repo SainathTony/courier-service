@@ -12,4 +12,5 @@ import lombok.RequiredArgsConstructor;
 public class Coupon {
     private final String couponCode;
     private final int discountPercentage;
+    private final OfferCriteria offerCriteria;
 }
