@@ -30,14 +30,22 @@ public class VehicleManager {
         return availableVehicleSNo;
     }
 
-    public void deliverPackage(int vehicleSNo, List<CourierPackage> courierPackages) {
+    public Map<String, Double> deliverPackage(int vehicleSNo, List<CourierPackage> courierPackages) {
         double existingDeliveryTime = vehicleStatusMapper.get(vehicleSNo);
-        double maxDeliveryTime = courierPackages.get(0).getDeliveryDistance() / vehicleInput.getMaxSpeed();
+        Map<String, Double> packageDeliveryMapper = new HashMap<>();
+        double maxDeliveryTime = roundTo2DecimalPlaces(courierPackages.get(0).getDeliveryDistance() / vehicleInput.getMaxSpeed());
         for (CourierPackage courierPackage : courierPackages) {
-            double tempDeliveryTime = courierPackage.getDeliveryDistance() / vehicleInput.getMaxSpeed();
-            if (maxDeliveryTime < tempDeliveryTime)
-                maxDeliveryTime = tempDeliveryTime;
+            double packageDeliveryTime = roundTo2DecimalPlaces(courierPackage.getDeliveryDistance() / vehicleInput.getMaxSpeed());
+            if (maxDeliveryTime < packageDeliveryTime)
+                maxDeliveryTime = packageDeliveryTime;
+            packageDeliveryMapper.put(courierPackage.getPackageId(), roundTo2DecimalPlaces((existingDeliveryTime + packageDeliveryTime)));
         }
-        vehicleStatusMapper.put(vehicleSNo, existingDeliveryTime + (maxDeliveryTime * 2));
+        vehicleStatusMapper.put(vehicleSNo, existingDeliveryTime + roundTo2DecimalPlaces((maxDeliveryTime * 2)));
+        return packageDeliveryMapper;
     }
+
+    private Double roundTo2DecimalPlaces(Double val) {
+        return Math.floor(val * 100) / 100;
+    }
+
 }

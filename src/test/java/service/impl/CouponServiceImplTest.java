@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import repository.CouponRepository;
 import repository.impl.StaticCouponRepository;
 import service.CouponService;
-import service.impl.CouponServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
