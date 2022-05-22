@@ -8,6 +8,7 @@ import java.util.List;
 public class ConsoleOutput implements OutputService {
     @Override
     public void showResults(List<DeliverySummary> deliverySummaryList) {
-        deliverySummaryList.forEach(costEstimate -> System.out.println(costEstimate));
+        System.out.println("\n====== Delivery Summary ======");
+        deliverySummaryList.forEach(deliverySummary -> System.out.println(deliverySummary));
     }
 }

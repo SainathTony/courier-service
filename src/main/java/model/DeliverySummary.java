@@ -17,6 +17,6 @@ public class DeliverySummary {
 
     @Override
     public String toString() {
-        return packageId + " " + discount + " " + totalCost + " " + deliveryTime;
+        return packageId + "   " + discount + "   " + totalCost + "   " + deliveryTime;
     }
 }
