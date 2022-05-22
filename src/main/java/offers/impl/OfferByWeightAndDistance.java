@@ -1,9 +1,9 @@
-package service.impl;
+package offers.impl;
 
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import model.CourierPackage;
-import model.OfferCriteria;
+import offers.OfferCriteria;
 
 @RequiredArgsConstructor
 @EqualsAndHashCode

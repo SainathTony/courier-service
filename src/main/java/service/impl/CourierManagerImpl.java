@@ -26,15 +26,15 @@ public class CourierManagerImpl implements PackageManager {
     public void manage() {
         CourierInput courierInput = (CourierInput) courierService.readInputFromUser();
         VehicleInput vehicleInput = (VehicleInput) vehicleInputService.readInputFromUser();
-        List<CostEstimate> estimates = courierInput.getCourierPackageList().stream().map(courierPackage ->
+        List<CostEstimate> deliveryInvoice = courierInput.getCourierPackageList().stream().map(courierPackage ->
                 costEstimationService.estimate(courierPackage, courierInput.getBaseDeliveryCost())).collect(Collectors.toList());
         deliveryService.addPackages(courierInput.getCourierPackageList());
         Map<String, Double> deliveryReport = deliveryService.deliverPackages(vehicleInput);
-        estimates.stream().map(costEstimate -> CostEstimate.builder()
+        deliveryInvoice = deliveryInvoice.stream().map(costEstimate -> CostEstimate.builder()
                 .packageId(costEstimate.getPackageId())
                 .discount(costEstimate.getDiscount())
                 .totalCost(costEstimate.getTotalCost())
-                .deliveryTime(deliveryReport.get(costEstimate.getPackageId()))).collect(Collectors.toList());
-        outputService.showResults(estimates);
+                .deliveryTime(deliveryReport.get(costEstimate.getPackageId())).build()).collect(Collectors.toList());
+        outputService.showResults(deliveryInvoice);
     }
 }

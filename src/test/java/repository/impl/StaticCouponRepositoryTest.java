@@ -3,7 +3,7 @@ package repository.impl;
 import model.Coupon;
 import org.junit.jupiter.api.Test;
 import repository.CouponRepository;
-import service.impl.OfferByWeightAndDistance;
+import offers.impl.OfferByWeightAndDistance;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

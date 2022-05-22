@@ -35,9 +35,9 @@ class CourierManagerImplTest {
     @Test
     void shouldTakeInputAndEstimateCost() {
         List<CostEstimate> costEstimateList = new ArrayList<>();
-        costEstimateList.add(CostEstimate.builder().packageId("PKG1").discount(0).totalCost(175).build());
-        costEstimateList.add(CostEstimate.builder().packageId("PKG2").discount(0).totalCost(275).build());
-        costEstimateList.add(CostEstimate.builder().packageId("PKG3").discount(35).totalCost(665).build());
+        costEstimateList.add(CostEstimate.builder().packageId("PKG1").discount(0).totalCost(175).deliveryTime(3.98).build());
+        costEstimateList.add(CostEstimate.builder().packageId("PKG2").discount(0).totalCost(275).deliveryTime(1.78).build());
+        costEstimateList.add(CostEstimate.builder().packageId("PKG3").discount(35).totalCost(665).deliveryTime(1.42).build());
         List<CourierPackage> packageList = new ArrayList<>();
         packageList.add(CourierPackage.builder().packageId("PKG1").packageWeight(5).deliveryDistance(5).couponCode("OFR001").build());
         packageList.add(CourierPackage.builder().packageId("PKG2").packageWeight(15).deliveryDistance(5).couponCode("OFR002").build());

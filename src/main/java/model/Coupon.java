@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import offers.OfferCriteria;
 
 @Builder
 @RequiredArgsConstructor

@@ -2,7 +2,7 @@ package repository.impl;
 
 import model.Coupon;
 import repository.CouponRepository;
-import service.impl.OfferByWeightAndDistance;
+import offers.impl.OfferByWeightAndDistance;
 
 import java.util.HashMap;
 import java.util.Map;

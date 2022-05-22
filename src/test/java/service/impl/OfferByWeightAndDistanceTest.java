@@ -1,7 +1,8 @@
 package service.impl;
 
 import model.CourierPackage;
-import model.OfferCriteria;
+import offers.impl.OfferByWeightAndDistance;
+import offers.OfferCriteria;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
