@@ -1,6 +1,6 @@
 package service.impl;
 
-import model.CostEstimate;
+import model.DeliverySummary;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,12 +30,12 @@ class ConsoleOutputTest {
 
     @Test
     void shouldPrintResultsInConsole() {
-        List<CostEstimate> costEstimateList = new ArrayList<>();
-        costEstimateList.add(CostEstimate.builder().packageId("PKG1").discount(0).totalCost(175).deliveryTime(1.58).build());
-        costEstimateList.add(CostEstimate.builder().packageId("PKG2").discount(0).totalCost(275).deliveryTime(2.6).build());
-        costEstimateList.add(CostEstimate.builder().packageId("PKG3").discount(35).totalCost(665).deliveryTime(5.7).build());
+        List<DeliverySummary> deliverySummaryList = new ArrayList<>();
+        deliverySummaryList.add(DeliverySummary.builder().packageId("PKG1").discount(0).totalCost(175).deliveryTime(1.58).build());
+        deliverySummaryList.add(DeliverySummary.builder().packageId("PKG2").discount(0).totalCost(275).deliveryTime(2.6).build());
+        deliverySummaryList.add(DeliverySummary.builder().packageId("PKG3").discount(35).totalCost(665).deliveryTime(5.7).build());
         String expectedOutput = "PKG1 0.0 175.0 1.58\nPKG2 0.0 275.0 2.6\nPKG3 35.0 665.0 5.7\n";
-        outputService.showResults(costEstimateList);
+        outputService.showResults(deliverySummaryList);
 
         assertEquals(expectedOutput, outContent.toString());
     }

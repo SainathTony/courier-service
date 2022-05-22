@@ -1,8 +1,8 @@
 package service;
 
-import model.CostEstimate;
+import model.DeliverySummary;
 import model.CourierPackage;
 
 public interface CostEstimationService {
-    CostEstimate estimate(CourierPackage courierPackage, double baseDeliveryCost);
+    DeliverySummary getDeliveryCostWithOffer(CourierPackage courierPackage, double baseDeliveryCost);
 }

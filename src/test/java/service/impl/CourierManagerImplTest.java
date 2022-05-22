@@ -1,6 +1,6 @@
 package service.impl;
 
-import model.CostEstimate;
+import model.DeliverySummary;
 import model.CourierInput;
 import model.CourierPackage;
 import model.VehicleInput;
@@ -34,10 +34,10 @@ class CourierManagerImplTest {
 
     @Test
     void shouldTakeInputAndEstimateCost() {
-        List<CostEstimate> costEstimateList = new ArrayList<>();
-        costEstimateList.add(CostEstimate.builder().packageId("PKG1").discount(0).totalCost(175).deliveryTime(3.98).build());
-        costEstimateList.add(CostEstimate.builder().packageId("PKG2").discount(0).totalCost(275).deliveryTime(1.78).build());
-        costEstimateList.add(CostEstimate.builder().packageId("PKG3").discount(35).totalCost(665).deliveryTime(1.42).build());
+        List<DeliverySummary> deliverySummaryList = new ArrayList<>();
+        deliverySummaryList.add(DeliverySummary.builder().packageId("PKG1").discount(0).totalCost(175).deliveryTime(3.98).build());
+        deliverySummaryList.add(DeliverySummary.builder().packageId("PKG2").discount(0).totalCost(275).deliveryTime(1.78).build());
+        deliverySummaryList.add(DeliverySummary.builder().packageId("PKG3").discount(35).totalCost(665).deliveryTime(1.42).build());
         List<CourierPackage> packageList = new ArrayList<>();
         packageList.add(CourierPackage.builder().packageId("PKG1").packageWeight(5).deliveryDistance(5).couponCode("OFR001").build());
         packageList.add(CourierPackage.builder().packageId("PKG2").packageWeight(15).deliveryDistance(5).couponCode("OFR002").build());
@@ -45,9 +45,9 @@ class CourierManagerImplTest {
         VehicleInput vehicleInput = VehicleInput.builder().noOfVehicles(2).maxCarryWeight(200).maxSpeed(70).build();
         when(courierInputService.readInputFromUser()).thenReturn(CourierInput.builder().baseDeliveryCost(100).courierPackageList(packageList).build());
         when(vehicleInputService.readInputFromUser()).thenReturn(vehicleInput);
-        doNothing().when(outputService).showResults(costEstimateList);
-        when(costEstimationService.estimate(any(CourierPackage.class), anyDouble())).thenReturn(costEstimateList.get(0))
-                .thenReturn(costEstimateList.get(1)).thenReturn(costEstimateList.get(2));
+        doNothing().when(outputService).showResults(deliverySummaryList);
+        when(costEstimationService.getDeliveryCostWithOffer(any(CourierPackage.class), anyDouble())).thenReturn(deliverySummaryList.get(0))
+                .thenReturn(deliverySummaryList.get(1)).thenReturn(deliverySummaryList.get(2));
         Map<String, Double> deliveryReport = new HashMap<>();
         deliveryReport.put("PKG1", 3.98);
         deliveryReport.put("PKG2", 1.78);
@@ -59,10 +59,10 @@ class CourierManagerImplTest {
         courierManager.manage();
 
         verify(courierInputService, times(1)).readInputFromUser();
-        verify(costEstimationService, times(3)).estimate(any(CourierPackage.class), anyDouble());
-        verify(costEstimationService, times(1)).estimate(packageList.get(0), 100);
-        verify(costEstimationService, times(1)).estimate(packageList.get(1), 100);
-        verify(costEstimationService, times(1)).estimate(packageList.get(2), 100);
-        verify(outputService, times(1)).showResults(costEstimateList);
+        verify(costEstimationService, times(3)).getDeliveryCostWithOffer(any(CourierPackage.class), anyDouble());
+        verify(costEstimationService, times(1)).getDeliveryCostWithOffer(packageList.get(0), 100);
+        verify(costEstimationService, times(1)).getDeliveryCostWithOffer(packageList.get(1), 100);
+        verify(costEstimationService, times(1)).getDeliveryCostWithOffer(packageList.get(2), 100);
+        verify(outputService, times(1)).showResults(deliverySummaryList);
     }
 }

@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @Getter
-public class CostEstimate {
+public class DeliverySummary {
     private final String packageId;
     private final double discount;
     private final double totalCost;

@@ -1,7 +1,7 @@
 package service.impl;
 
 import lombok.RequiredArgsConstructor;
-import model.CostEstimate;
+import model.DeliverySummary;
 import model.CourierInput;
 import model.VehicleInput;
 import service.CostEstimationService;
@@ -26,11 +26,11 @@ public class CourierManagerImpl implements CourierManager {
     public void manage() {
         CourierInput courierInput = (CourierInput) courierService.readInputFromUser();
         VehicleInput vehicleInput = (VehicleInput) vehicleInputService.readInputFromUser();
-        List<CostEstimate> deliveryInvoice = courierInput.getCourierPackageList().stream().map(courierPackage ->
-                costEstimationService.estimate(courierPackage, courierInput.getBaseDeliveryCost())).collect(Collectors.toList());
+        List<DeliverySummary> deliveryInvoice = courierInput.getCourierPackageList().stream().map(courierPackage ->
+                costEstimationService.getDeliveryCostWithOffer(courierPackage, courierInput.getBaseDeliveryCost())).collect(Collectors.toList());
         deliveryService.addPackages(courierInput.getCourierPackageList());
         Map<String, Double> deliveryReport = deliveryService.deliverPackages(vehicleInput);
-        deliveryInvoice = deliveryInvoice.stream().map(costEstimate -> CostEstimate.builder()
+        deliveryInvoice = deliveryInvoice.stream().map(costEstimate -> DeliverySummary.builder()
                 .packageId(costEstimate.getPackageId())
                 .discount(costEstimate.getDiscount())
                 .totalCost(costEstimate.getTotalCost())
