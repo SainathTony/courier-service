@@ -15,12 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DeliveryVehicleManagerTest {
 
-    private VehicleInput vehicleInput = new VehicleInput(2, 70, 200);
-    private final VehicleManager vehicleManager = new VehicleManager(vehicleInput);
+    private final VehicleManager vehicleManager = new VehicleManager();
 
     @BeforeEach
     public void setup() {
-        vehicleInput = new VehicleInput(2, 70, 200);
     }
 
     @Test
@@ -31,7 +29,9 @@ class DeliveryVehicleManagerTest {
         secondDelivery.add(CourierPackage.builder().deliveryDistance(90).build());
         List<CourierPackage> thirdDelivery = new ArrayList<>();
         thirdDelivery.add(CourierPackage.builder().deliveryDistance(90).build());
+        VehicleInput vehicleInput = VehicleInput.builder().noOfVehicles(2).maxCarryWeight(200).maxSpeed(70).build();
 
+        vehicleManager.addVehicles(vehicleInput);
         int availableVehicleToDeliver1 = vehicleManager.getAvailableVehicleToDeliver();
         vehicleManager.deliverPackage(availableVehicleToDeliver1, firstDelivery);
         int availableVehicleToDeliver2 = vehicleManager.getAvailableVehicleToDeliver();
@@ -60,7 +60,9 @@ class DeliveryVehicleManagerTest {
         expectedReport3.put("PKG5", 4.18);
         Map<String, Double> expectedReport4 = new HashMap<>();
         expectedReport4.put("PKG1", 3.98);
+        VehicleInput vehicleInput = VehicleInput.builder().noOfVehicles(2).maxCarryWeight(200).maxSpeed(70).build();
 
+        vehicleManager.addVehicles(vehicleInput);
         Map<String, Double> actualReport1 = vehicleManager.deliverPackage(0, asList(package2, package4));
         Map<String, Double> actualReport2 = vehicleManager.deliverPackage(1, asList(package3));
         Map<String, Double> actualReport3 = vehicleManager.deliverPackage(1, asList(package5));

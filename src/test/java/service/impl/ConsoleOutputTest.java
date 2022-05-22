@@ -31,10 +31,10 @@ class ConsoleOutputTest {
     @Test
     void shouldPrintResultsInConsole() {
         List<CostEstimate> costEstimateList = new ArrayList<>();
-        costEstimateList.add(CostEstimate.builder().packageId("PKG1").discount(0).totalCost(175).build());
-        costEstimateList.add(CostEstimate.builder().packageId("PKG2").discount(0).totalCost(275).build());
-        costEstimateList.add(CostEstimate.builder().packageId("PKG3").discount(35).totalCost(665).build());
-        String expectedOutput = "PKG1 0.0 175.0\nPKG2 0.0 275.0\nPKG3 35.0 665.0\n";
+        costEstimateList.add(CostEstimate.builder().packageId("PKG1").discount(0).totalCost(175).deliveryTime(1.58).build());
+        costEstimateList.add(CostEstimate.builder().packageId("PKG2").discount(0).totalCost(275).deliveryTime(2.6).build());
+        costEstimateList.add(CostEstimate.builder().packageId("PKG3").discount(35).totalCost(665).deliveryTime(5.7).build());
+        String expectedOutput = "PKG1 0.0 175.0 1.58\nPKG2 0.0 275.0 2.6\nPKG3 35.0 665.0 5.7\n";
         outputService.showResults(costEstimateList);
 
         assertEquals(expectedOutput, outContent.toString());

@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class VehicleManager {
-    private final VehicleInput vehicleInput;
+    private VehicleInput vehicleInput;
     private Map<Integer, Double> vehicleStatusMapper = new HashMap<>();
 
-    VehicleManager(VehicleInput vehicleInput) {
+    public void addVehicles(VehicleInput vehicleInput) {
         this.vehicleInput = vehicleInput;
         for (int vehicle = 0; vehicle < vehicleInput.getNoOfVehicles(); vehicle++) {
             vehicleStatusMapper.put(vehicle, 0.0);

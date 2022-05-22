@@ -24,6 +24,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     public Map<String, Double> deliverPackages(VehicleInput vehicleInput) {
+        vehicleManager.addVehicles(vehicleInput);
         Map<String, Double> packageDeliverySummary = new HashMap<>();
         while (packagesAreAvailable()) {
             int availableVehicleToDeliver = vehicleManager.getAvailableVehicleToDeliver();
