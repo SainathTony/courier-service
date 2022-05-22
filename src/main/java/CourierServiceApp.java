@@ -4,7 +4,7 @@ import service.CouponService;
 import service.DeliveryService;
 import service.InputService;
 import service.OutputService;
-import service.PackageManager;
+import service.CourierManager;
 import service.impl.ConsoleOutput;
 import service.impl.CostEstimationServiceImpl;
 import service.impl.CouponServiceImpl;
@@ -24,9 +24,13 @@ public class CourierServiceApp {
     private final CostEstimationService costEstimationService = new CostEstimationServiceImpl(couponService);
     private final VehicleManager vehicleManager = new VehicleManager();
     private final DeliveryService deliveryService = new DeliveryServiceImpl(vehicleManager);
-    private final PackageManager packageManager = new CourierManagerImpl(courierInputService, vehicleInputService, outputService, costEstimationService, deliveryService);
+    private final CourierManager courierManager = new CourierManagerImpl(courierInputService, vehicleInputService, outputService, costEstimationService, deliveryService);
+
+    public void start() {
+        courierManager.manage();
+    }
 
     public static void main(String[] args) {
-        new CourierServiceApp().packageManager.manage();
+        new CourierServiceApp().start();
     }
 }

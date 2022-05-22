@@ -9,7 +9,7 @@ import service.CostEstimationService;
 import service.DeliveryService;
 import service.InputService;
 import service.OutputService;
-import service.PackageManager;
+import service.CourierManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ class CourierManagerImplTest {
     private final OutputService outputService = mock(ConsoleOutput.class);
     private final CostEstimationService costEstimationService = mock(CostEstimationServiceImpl.class);
     private final DeliveryService deliveryService = mock(DeliveryService.class);
-    private final PackageManager packageManager = new CourierManagerImpl(courierInputService, vehicleInputService, outputService, costEstimationService, deliveryService);
+    private final CourierManager courierManager = new CourierManagerImpl(courierInputService, vehicleInputService, outputService, costEstimationService, deliveryService);
 
     @Test
     void shouldTakeInputAndEstimateCost() {
@@ -56,7 +56,7 @@ class CourierManagerImplTest {
         deliveryReport.put("PKG5", 4.19);
         when(deliveryService.deliverPackages(vehicleInput)).thenReturn(deliveryReport);
 
-        packageManager.manage();
+        courierManager.manage();
 
         verify(courierInputService, times(1)).readInputFromUser();
         verify(costEstimationService, times(3)).estimate(any(CourierPackage.class), anyDouble());

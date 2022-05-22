@@ -1,5 +1,5 @@
 package service;
 
-public interface PackageManager {
+public interface CourierManager {
     void manage();
 }

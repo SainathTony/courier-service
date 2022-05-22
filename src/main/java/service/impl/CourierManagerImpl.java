@@ -8,14 +8,14 @@ import service.CostEstimationService;
 import service.DeliveryService;
 import service.InputService;
 import service.OutputService;
-import service.PackageManager;
+import service.CourierManager;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class CourierManagerImpl implements PackageManager {
+public class CourierManagerImpl implements CourierManager {
     private final InputService courierService;
     private final InputService vehicleInputService; 
     private final OutputService outputService;
