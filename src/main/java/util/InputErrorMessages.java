@@ -8,4 +8,7 @@ public class InputErrorMessages {
     public static final String UNKNOWN_ERROR_MESSAGE = "Something went wrong. Please try again";
     public static final String INVALID_VEHICLE_INPUT_LENGTH_MESSAGE = "Please provide all 3 fields. Format: No_Of_Vehicles Max_Speed Max_Carry_Weight";
     public static final String INVALID_VEHICLE_INPUT = "Please enter valid numbers";
+    public static final String INVALID_BASE_DELIVERY_OR_PACKAGE_COUNT_INPUT_MESSAGE = "Please enter valid base delivery cost or package count";
+    public static final String INVALID_PACKAGE_COUNT_MESSAGE = "Package count should be at least 1";
+    public static final String INVALID_BASE_DELIVERY_INPUT_LENGTH_MESSAGE = "Invalid input length";
 }

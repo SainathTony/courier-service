@@ -17,8 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static util.InputErrorMessages.INVALID_BASE_DELIVERY_INPUT_LENGTH_MESSAGE;
+import static util.InputErrorMessages.INVALID_BASE_DELIVERY_OR_PACKAGE_COUNT_INPUT_MESSAGE;
 import static util.InputErrorMessages.INVALID_COUPON_CODE_MESSAGE;
 import static util.InputErrorMessages.INVALID_COURIER_INPUT_LENGTH_MESSAGE;
+import static util.InputErrorMessages.INVALID_PACKAGE_COUNT_MESSAGE;
 import static util.InputErrorMessages.INVALID_PACKAGE_ID_MESSAGE;
 import static util.InputErrorMessages.INVALID_WEIGHT_OR_DISTANCE_MESSAGE;
 
@@ -48,8 +51,50 @@ class CourierInputCMDTest {
         when(scanner.nextLine()).thenReturn("100 3").thenReturn("PKG1 5 5 OFR001").thenReturn("PKG2 15 5 OFR002").thenReturn("PKG3 10 100 OFR003");
 
         CourierInput courierInput = (CourierInput) inputService.readInputFromUser();
-        
+
         assertEquals(estimateInput, courierInput);
+    }
+
+    @Test
+    void shouldAskInputAgainIfBaseCostInputLengthIsInvalid() {
+        List<CourierPackage> packageList = new ArrayList<>();
+        packageList.add(CourierPackage.builder().packageId("PKG1").packageWeight(5).deliveryDistance(5).couponCode("OFR001").build());
+        packageList.add(CourierPackage.builder().packageId("PKG2").packageWeight(15).deliveryDistance(5).couponCode("OFR002").build());
+        CourierInput estimateInput = CourierInput.builder().baseDeliveryCost(100).courierPackageList(packageList).build();
+        when(scanner.nextLine()).thenReturn("100 3 2").thenReturn("100 2").thenReturn("PKG1 5 5 OFR001").thenReturn("PKG2 15 5 OFR002");
+
+        CourierInput courierInput = (CourierInput) inputService.readInputFromUser();
+
+        assertEquals(estimateInput, courierInput);
+        assertTrue(outContent.toString().contains(INVALID_BASE_DELIVERY_INPUT_LENGTH_MESSAGE));
+    }
+
+    @Test
+    void shouldAskInputAgainIfBaseCostInputIsInvalid() {
+        List<CourierPackage> packageList = new ArrayList<>();
+        packageList.add(CourierPackage.builder().packageId("PKG1").packageWeight(5).deliveryDistance(5).couponCode("OFR001").build());
+        packageList.add(CourierPackage.builder().packageId("PKG2").packageWeight(15).deliveryDistance(5).couponCode("OFR002").build());
+        CourierInput estimateInput = CourierInput.builder().baseDeliveryCost(100).courierPackageList(packageList).build();
+        when(scanner.nextLine()).thenReturn("100 A").thenReturn("100 2").thenReturn("PKG1 5 5 OFR001").thenReturn("PKG2 15 5 OFR002");
+
+        CourierInput courierInput = (CourierInput) inputService.readInputFromUser();
+
+        assertEquals(estimateInput, courierInput);
+        assertTrue(outContent.toString().contains(INVALID_BASE_DELIVERY_OR_PACKAGE_COUNT_INPUT_MESSAGE));
+    }
+
+    @Test
+    void shouldAskInputAgainIfPackageCountIsInvalid() {
+        List<CourierPackage> packageList = new ArrayList<>();
+        packageList.add(CourierPackage.builder().packageId("PKG1").packageWeight(5).deliveryDistance(5).couponCode("OFR001").build());
+        packageList.add(CourierPackage.builder().packageId("PKG2").packageWeight(15).deliveryDistance(5).couponCode("OFR002").build());
+        CourierInput estimateInput = CourierInput.builder().baseDeliveryCost(100).courierPackageList(packageList).build();
+        when(scanner.nextLine()).thenReturn("100 0").thenReturn("100 2").thenReturn("PKG1 5 5 OFR001").thenReturn("PKG2 15 5 OFR002");
+
+        CourierInput courierInput = (CourierInput) inputService.readInputFromUser();
+
+        assertEquals(estimateInput, courierInput);
+        assertTrue(outContent.toString().contains(INVALID_PACKAGE_COUNT_MESSAGE));
     }
 
     @Test
