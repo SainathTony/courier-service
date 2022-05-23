@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'org.example'
@@ -7,6 +8,12 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+mainClassName = 'CourierServiceApp' // class with the main method used by Gradle plugin
+
+run {
+    standardInput = System.in
 }
 
 dependencies {

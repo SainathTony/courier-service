@@ -52,6 +52,7 @@ public class CourierInputCMD implements InputService {
             } catch (CourierServiceException ex) {
                 System.out.println(ex);
             } catch (Exception ex) {
+                ex.printStackTrace();
                 System.out.println(UNKNOWN_ERROR_MESSAGE);
             }
         }
