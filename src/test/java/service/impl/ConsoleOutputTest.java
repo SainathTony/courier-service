@@ -34,7 +34,7 @@ class ConsoleOutputTest {
         deliverySummaryList.add(DeliverySummary.builder().packageId("PKG1").discount(0).totalCost(175).deliveryTime(1.58).build());
         deliverySummaryList.add(DeliverySummary.builder().packageId("PKG2").discount(0).totalCost(275).deliveryTime(2.6).build());
         deliverySummaryList.add(DeliverySummary.builder().packageId("PKG3").discount(35).totalCost(665).deliveryTime(5.7).build());
-        String expectedOutput = "PKG1 0.0 175.0 1.58\nPKG2 0.0 275.0 2.6\nPKG3 35.0 665.0 5.7\n";
+        String expectedOutput = "\n====== Delivery Summary ======\nPKG1   0.0   175.0   1.58\nPKG2   0.0   275.0   2.6\nPKG3   35.0   665.0   5.7\n";
         outputService.showResults(deliverySummaryList);
 
         assertEquals(expectedOutput, outContent.toString());

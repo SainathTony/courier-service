@@ -73,4 +73,24 @@ class DeliveryVehicleManagerTest {
         assertEquals(expectedReport3, actualReport3);
         assertEquals(expectedReport4, actualReport4);
     }
+
+    @Test
+    void shouldReturnDeliverySummaryFor1Vehicle() {
+        CourierPackage package1 = CourierPackage.builder().packageId("PKG1").packageWeight(5).deliveryDistance(5).couponCode("OFR001").build();
+        CourierPackage package2 = CourierPackage.builder().packageId("PKG2").packageWeight(15).deliveryDistance(5).couponCode("OFFR0008").build();
+        CourierPackage package3 = CourierPackage.builder().packageId("PKG3").packageWeight(10).deliveryDistance(100).couponCode("OFFR003").build();
+        Map<String, Double> expectedReport1 = new HashMap<>();
+        expectedReport1.put("PKG1", 0.5);
+        expectedReport1.put("PKG3", 10.0);
+        Map<String, Double> expectedReport2 = new HashMap<>();
+        expectedReport2.put("PKG2", 20.5);
+        VehicleInput vehicleInput = VehicleInput.builder().noOfVehicles(1).maxCarryWeight(15).maxSpeed(10).build();
+
+        vehicleManager.addVehicles(vehicleInput);
+        Map<String, Double> actualReport1 = vehicleManager.deliverPackage(0, asList(package1, package3));
+        Map<String, Double> actualReport2 = vehicleManager.deliverPackage(0, asList(package2));
+
+        assertEquals(expectedReport1, actualReport1);
+        assertEquals(expectedReport2, actualReport2);
+    }
 }
